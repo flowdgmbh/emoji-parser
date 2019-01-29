@@ -2,7 +2,7 @@
 
 namespace Flowd\EmojiParser;
 
-class EmojiCollection implements \Iterator, \ArrayAccess
+class EmojiCollection implements \Iterator, \ArrayAccess, \Countable
 {
     private $emojis = [];
 
@@ -61,5 +61,10 @@ class EmojiCollection implements \Iterator, \ArrayAccess
         if (\array_key_exists($offset, $this->emojis)) {
             unset($this->emojis[$offset]);
         }
+    }
+
+    public function count()
+    {
+        return count($this->emojis);
     }
 }
