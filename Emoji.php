@@ -21,6 +21,32 @@ class Emoji
         return $this;
     }
 
+    public function removeVariations(): self
+    {
+        $this->hexCodePoints = \array_diff($this->hexCodePoints, ['FE0E', 'FE0F']);
+        return $this;
+    }
+
+    /**
+     * This method does not check if the emoji supports the text style variation.
+     * See https://unicode.org/reports/tr51/#Emoji_Variation_Sequences for details
+     */
+    public function setVariationToTextStyle(): self
+    {
+        $this->removeVariations()->hexCodePoints[] = 'FE0E';
+        return $this;
+    }
+
+    /**
+     * This method does not check if the emoji supports the emoji style variation.
+     * See https://unicode.org/reports/tr51/#Emoji_Variation_Sequences for details
+     */
+    public function setVariationToEmojiStyle(): self
+    {
+        $this->removeVariations()->hexCodePoints[] = 'FE0F';
+        return $this;
+    }
+
     public function getSkinTone(): ?string
     {
         return Parser::getSkinToneFromEmoji($this);
