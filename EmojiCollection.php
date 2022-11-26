@@ -12,7 +12,7 @@ class EmojiCollection implements \Iterator, \ArrayAccess, \Countable
         return $this;
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         \reset($this->emojis);
     }
@@ -22,23 +22,23 @@ class EmojiCollection implements \Iterator, \ArrayAccess, \Countable
         return \current($this->emojis);
     }
 
-    public function key()
+    public function key(): mixed
     {
         return \key($this->emojis);
     }
 
-    public function next()
+    public function next(): void
     {
-        return next($this->emojis);
+        next($this->emojis);
     }
 
-    public function valid()
+    public function valid(): bool
     {
         $key = \key($this->emojis);
-        return ($key !== null && $key !== false);
+        return $key !== null;
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return \array_key_exists($offset, $this->emojis);
     }
@@ -48,7 +48,7 @@ class EmojiCollection implements \Iterator, \ArrayAccess, \Countable
         return $this->emojis[$offset] ?? null;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!$value instanceof Emoji) {
             throw new \InvalidArgumentException('EmojiCollection does only allow Emoji items');
@@ -56,14 +56,14 @@ class EmojiCollection implements \Iterator, \ArrayAccess, \Countable
         $this->emojis[$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (\array_key_exists($offset, $this->emojis)) {
             unset($this->emojis[$offset]);
         }
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->emojis);
     }
